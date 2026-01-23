@@ -18,3 +18,18 @@ const userSchema = new mongoose.Schema({
 });
 
 const User = mongoose.model('User', userSchema);;
+
+const user2 = new User({
+    name: 'Eve',
+    age: 48,
+    email: 'eve@yahoo.in',
+});
+
+user2
+  .save()
+  .then((res) => {
+    console.log(res);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
