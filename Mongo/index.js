@@ -19,9 +19,17 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', userSchema);;
 
-const user2 = new User({
+User.find({age: {$gt:47}})
+.then((res) => {
+    console.log(res);
+})
+.catch((err) => {
+    console.log(err);
+});
+
+/*const user2 = new User({
     name: 'Eve',
-    age: 48,
+    age: 50,
     email: 'eve@yahoo.in',
 });
 
@@ -33,3 +41,21 @@ user2
   .catch((err) => {
     console.log(err);
   });
+
+
+  const user3 = new User({
+    name: 'Prashant',
+    age: 24,
+    email: 'prashyu@yahoo.in',
+});
+
+user3
+  .save()
+  .then((res) => {
+    console.log(res);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+*/
+
