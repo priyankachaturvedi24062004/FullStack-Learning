@@ -10,7 +10,7 @@ body{
 
 .msg {
     background-color: rgb(236, 30, 255);
-    color: white
+    color: white;
     padding: 5px 15px;
     border-radius: 16px;
 }

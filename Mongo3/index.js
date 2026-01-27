@@ -15,6 +15,7 @@ main()
 
 async function main() {
     await mongoose.connect('mongodb://127.0.0.1:27017/whatsapp');
+
 }
 
 //Index route
@@ -24,10 +25,12 @@ app.get("/", async(req, res) => {
   res.render("index.ejs", {chats});
 });
 
-
-app.get("/", (req, res) => {
-    res.send("root is working");
+//New chat route
+app.get("/chats/new", (req, res) => {
+    res.render("new.ejs");
 });
+
+
 
 app.listen(8080,() =>{
     console.log("server is listening on port 8080");
