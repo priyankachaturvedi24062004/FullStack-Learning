@@ -1,3 +1,19 @@
-body {
+/*body {
     background-color: rgb(231, 240, 107);
+}*/
+
+
+/* Navbar customization */
+.navbar {
+    height: 5rem;
+    background-color: white;
+}
+
+.fa-compass{
+    color : #fe424d;
+    font-size: 2rem;
+}
+
+.nav-link{
+    color:#222222 !important;
 }
