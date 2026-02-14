@@ -13,6 +13,12 @@ app.use((req, res, next) => {
 }); */
 
 app.use((req, res, next) => {
+    console.log('I am only for random');
+    next();
+});
+
+//logger
+app.use((req, res, next) => {
     req.time = new Date(Date.now()).toString();
     console.log(req.method, req.hostname, req.path, req.time);
     next();
@@ -24,6 +30,11 @@ app.get('/', (req, res) => {
 
 app.get("/random", (req, res) => {
     res.send('Hi,I am random.');
+});
+
+//404
+app.use((req, res) => {
+    res.status(404).send('Page Not Found!');
 });
 
 app.listen(8080, () => {
