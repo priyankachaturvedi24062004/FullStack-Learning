@@ -1,7 +1,7 @@
 const exress = require('express');
 const app = exress();
 
-app.use((req, res, next) => {
+/*app.use((req, res, next) => {
     console.log('Hii,I am First Middleware');
     next();
     console.log('Hii,This is after next() in First Middleware');
@@ -10,7 +10,13 @@ app.use((req, res, next) => {
 app.use((req, res, next) => {
     console.log('Hii,I am Second Middleware');
     next();
-}); 
+}); */
+
+app.use((req, res, next) => {
+    req.time = new Date(Date.now()).toString();
+    console.log(req.method, req.hostname, req.path, req.time);
+    next();
+});
 
 app.get('/', (req, res) => {
     res.send('Hi,I am root.');
