@@ -17,13 +17,17 @@ app.use((req, res, next) => {
     if (token === 'giveaccess') {
         next();
     }
-    res.send("ACCESS DENIED!");
+    throw new Error("ACCESS DENIED!");
 });
 
 app.use((req, res, next) => {
     console.log('I am only for random');
     next();
 });
+
+/*app.get('/wrong', (req, res) => {
+    abcd = abcd;
+});*/
 
 app.get("/api", (req, res) => {
     res.send('data');
