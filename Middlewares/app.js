@@ -1,5 +1,5 @@
-const exress = require('express');
-const app = exress();
+const express = require('express');
+const app = express();
 
 /*app.use((req, res, next) => {
     console.log('Hii,I am First Middleware');
@@ -25,9 +25,6 @@ app.use((req, res, next) => {
     next();
 });
 
-/*app.get('/wrong', (req, res) => {
-    abcd = abcd;
-});*/
 
 app.get("/api", (req, res) => {
     res.send('data');
@@ -47,6 +44,17 @@ app.get('/', (req, res) => {
 app.get("/random", (req, res) => {
     res.send('Hi,I am random.');
 });
+
+app.get('/wrong', (req, res) => {
+    abcd = abcd;
+});
+
+
+app.use((err, req, res, next) => {
+    console.log("------Error------");
+    res.status(500).send(err.message);
+});
+
 
 //404
 app.use((req, res) => {
