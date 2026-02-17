@@ -34,7 +34,6 @@ app.use((req, res, next) => {
 
 
 
-
 app.get('/', (req, res) => {
     res.send('Hi,I am root.');
 });
@@ -47,10 +46,14 @@ app.get('/wrong', (req, res) => {
     abcd = abcd;
 });
 
+app.get('/admin',(req,res) => {
+    throw new ExpressError(403, "Access to admin is forbidden");
+});
+
 
 app.use((err, req, res, next) => {
-    console.log("------Error------");
-    res.send(err);
+    let {status = 500,message} = err;
+    res.status(status).send(message);
 });
 
 
@@ -65,6 +68,7 @@ app.use((req, res) => {
 app.listen(8080, () => {
     console.log('Server is running on port 8080');
 });
+
 
 /*logger
 app.use((req, res, next) => {
