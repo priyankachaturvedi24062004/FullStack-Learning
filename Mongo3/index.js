@@ -26,37 +26,40 @@ app.use(methodOverride('_method'));
 
 //Index route
 app.get("/", async(req, res) => {
-  let chats = await Chat.find({})
-  //console.log(chats);
-  res.render("index.ejs", {chats});
+    try{
+        let chats = await Chat.find({})
+        //console.log(chats);
+        res.render("index.ejs", {chats});
+    } catch(err) {
+        next(err);
+    }
+  
 });
 
 //New chat route
 app.get("/chats/new", (req, res) => {
-    throw new ExpressError(404, "Page not found!");
     res.render("new.ejs");
 });
 
 
 //create chat route
-app.post("/chats", (req, res) => {
-    let { from, to, msg } = req.body;
+app.post("/chats", async(req, res, next) => {
+    try{
+        let { from, to, msg } = req.body;
 
-    let newChat = new Chat({
-        from,
-        to,
-        msg,
-        created_at: new Date()
-    });
-
-    newChat.save()
-        .then(() => {
-            console.log("chat saved");
-            res.redirect("/");   // ✅ CORRECT
-        })
-        .catch(err => {
-            console.log(err);
+        let newChat = new Chat({
+            from,
+            to,
+            msg,
+            created_at: new Date()
         });
+
+        await newChat.save();
+        console.log("chat saved");
+        res.redirect("/");
+    } catch(err) {
+        next(err);
+    }
 });
 
 
@@ -65,47 +68,67 @@ app.post("/chats", (req, res) => {
 
 //New - show chat route
 app.get("/chats/:id", async(req, res, next) => {
-    let { id } = req.params;
-    let chat = await Chat.findById(id);
-    if(!chat){
+    try{
+        let { id } = req.params;
+        let chat = await Chat.findById(id);
+        if(!chat){
         return next(new ExpressError(404, "Chat not found!"));
     }
-    res.render("show.ejs", {chat});
+        res.render("show.ejs", {chat});
+    } catch(err) {
+        next(err);
+    }
+    
 });
 
 
 
 //edit chat route
 app.get("/chats/:id/edit", async(req, res, next) => {
-    let { id } = req.params;
-    let chat = await Chat.findById(id);
-    if(!chat){
+    try{
+        let { id } = req.params;
+        let chat = await Chat.findById(id);
+        if(!chat){
         return next(new ExpressError(404, "Chat not found!"));
     }
-    res.render("edit.ejs",{chat});
+        res.render("edit.ejs",{chat});
+    } catch(err) {
+        next(err);
+    }
+    
 });
 
 //update chat route
 app.put("/chats/:id",async (req, res) => {
-    let { id } = req.params;
-    let { msg: newMsg } = req.body;
-    console.log(newMsg);
-    let chat = await Chat.findByIdAndUpdate(
+    try{
+        let { id } = req.params;
+        let { msg: newMsg } = req.body;
+        console.log(newMsg);
+        let chat = await Chat.findByIdAndUpdate(
         id, 
         {msg: newMsg},
         {runValidators: true, new: true}
 );
 
-    console.log("updatedChat");
-    res.redirect("/");
+        console.log("updatedChat", chat);
+        res.redirect("/");
+    } catch(err) {
+        next(err);
+    }
+    
 });
 
 //delete chat route
 app.delete("/chats/:id", async(req, res) => {
-    let { id } = req.params;
-    let deletedChat = await Chat.findByIdAndDelete(id);
-    console.log("deletedChat");
-    res.redirect("/");
+    try{
+        let { id } = req.params;
+        let deletedChat = await Chat.findByIdAndDelete(id);
+        console.log("deletedChat", deletedChat);
+        res.redirect("/");
+    } catch(err) {
+        next(err);
+    }
+   
 });
 
 //Error Handling Middleware
