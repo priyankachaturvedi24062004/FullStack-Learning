@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Details</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<h3>Chat Details</h3>
+
+<div class="chat">
+    <p>From : <i><%= chat.from %></i></p>
+
+   
+
+    <p>Received by <i><%= chat.to %></i></p>
+    <hr />
+    <p><%= chat.created_at.toString().split(" ")[4] %></p>
+    <p><%= chat.created_at.toString().split(" ").slice(0,4).join("-") %></p>
+</div>
+
+<br>
+<a href="/">⬅ Back to All Chats</a>
+
+</body>
+</html>

@@ -63,40 +63,34 @@ app.post("/chats", async(req, res, next) => {
 });
 
 
-
+function asyncWrap(fn){
+    return function (req,res,next){
+        fn(req,res,next).catch((err) => next(err));
+    };
+}
 
 
 //New - show chat route
-app.get("/chats/:id", async(req, res, next) => {
-    try{
+app.get("/chats/:id", asyncWrap (async(req, res, next) => {
         let { id } = req.params;
         let chat = await Chat.findById(id);
         if(!chat){
         return next(new ExpressError(404, "Chat not found!"));
     }
         res.render("show.ejs", {chat});
-    } catch(err) {
-        next(err);
-    }
-    
-});
+    }));
 
 
 
 //edit chat route
-app.get("/chats/:id/edit", async(req, res, next) => {
-    try{
+app.get("/chats/:id/edit",(async(req, res, next) => {
         let { id } = req.params;
         let chat = await Chat.findById(id);
         if(!chat){
         return next(new ExpressError(404, "Chat not found!"));
     }
         res.render("edit.ejs",{chat});
-    } catch(err) {
-        next(err);
-    }
-    
-});
+    }));
 
 //update chat route
 app.put("/chats/:id",async (req, res) => {
