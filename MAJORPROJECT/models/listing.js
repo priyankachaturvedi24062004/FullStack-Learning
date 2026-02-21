@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+
 const listingSchema = new Schema({
   title: String,
   description: String,
@@ -8,7 +9,10 @@ const listingSchema = new Schema({
     filename: String,
     url: String
   },
-  price: Number,
+ price: {
+  type: Number,
+  default: 0
+},
   location: String,
   country: String
 });

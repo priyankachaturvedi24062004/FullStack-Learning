@@ -38,10 +38,8 @@ app.get("/", (req, res) => {
 
 app.get("/listings", async (req, res) => {
     const allListings = await Listing.find({});
-    res.render("listings/index", { allListings });
-
+    res.render("listings/index", { listings: allListings });
 });
-
 //New Route
 app.get("/listings/new", (req, res) => {
     res.render("listings/new.ejs");
