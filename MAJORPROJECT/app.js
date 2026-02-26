@@ -57,9 +57,21 @@ app.get("/listings/:id/edit", async (req, res) => {
 //Update Route
 app.put("/listings/:id", async (req, res) => {
     let { id } = req.params;
-    await Listing.findByIdAndUpdate(id, {...req.body.listing});
+    let listing = await Listing.findById(id);
+
+    listing.title = req.body.listing.title;
+    listing.description = req.body.listing.description;
+    listing.price = req.body.listing.price;
+    listing.location = req.body.listing.location;
+    listing.country = req.body.listing.country;
+
+    listing.image.url = req.body.listing.image.url;
+
+    await listing.save();
+
     res.redirect(`/listings/${id}`);
-});
+        res.redirect(`/listings/${id}`);
+    });
 
 //Delete Route
 app.delete("/listings/:id", async (req, res) => {
@@ -78,7 +90,10 @@ app.get("/listings/:id", async (req, res) => {
 
 //Create Route
 app.post("/listings", async (req, res) => {
-    const newListing = new Listing(req.body.listing);
+    let newListing = new Listing(req.body.listing);
+
+    newListing.image.filename = "listingimage";  // temporary static filename
+
     await newListing.save();
     res.redirect("/listings/");
 });
